@@ -1,19 +1,16 @@
-# 🛒 Men's Store App
+# 🛒 Men's Store App (ITI Project #3)
 
 A modern, fully-functional E-commerce mobile application built with Flutter. This project showcases a seamless user experience for browsing, searching, managing a shopping cart, and handling user accounts.
 
-Developed as part of the **ITI (Information Technology Institute)** Flutter Development Track.
+This is the **3rd Project** developed as part of the **ITI (Information Technology Institute)** Flutter Development Track.
 
 ---
 
 ## 📱 App Walkthrough
 
-<p align="center">
-  <!-- اسحب ملف الفيديو Men's Store App.mp4 وارميه في الـ Readme على جيت هاب، واستبدل الرابط اللي تحت بالرابط اللي جيت هاب هيولده لك -->
-  <video src="ضع_رابط_الفيديو_المرفوع_هنا" width="300" controls autoplay muted loop>
-    Your browser does not support the video tag.
-  </video>
-</p>
+You can watch the full application walkthrough video directly on Google Drive by clicking the link below:
+
+🚀 **[Click Here to Watch the App Walkthrough Video](https://drive.google.com/file/d/1Ykfjl7C889aAB420v3RFUPXqSrp4xs6z/view?usp=sharing)**
 
 ---
 
@@ -32,6 +29,15 @@ Developed as part of the **ITI (Information Technology Institute)** Flutter Deve
 
 ---
 
+## ⚠️ Project Status & Known Limitations
+
+> 📌 **Note:** As this is an academic/training project, some features are currently simulated (Mocked) or under active development:
+* **Real Payment Gateway:** The checkout button navigates smoothly but does not process real financial transactions (using dummy values for shipping and VAT).
+* **Profile Edit:** Some options inside the Account section (like editing user details) are static UI views and not connected to active database writes.
+* **State Persistence:** Cart items and authentication tokens may reset when the application is completely closed and reopened (No persistent local storage integration yet).
+
+---
+
 ## 🛠️ Tech Stack & Architecture
 
 * **Framework:** [Flutter](https://flutter.dev/) (Dart)
@@ -43,26 +49,43 @@ Developed as part of the **ITI (Information Technology Institute)** Flutter Deve
 
 ## 📂 Project Structure (Feature-First)
 
-The project is structured using a **Feature-First** approach, making it highly modular and scalable:
+The project is structured using a strict **Feature-First** approach, keeping global shared code in `core` and self-contained features inside `features` with a clean separation of concerns:
 
 ```text
 lib/
 │
-├── core/                    # Shared utilities, themes, network client, and global constants
+├── core/                         # Shared & global application helper layers
+│   ├── constants/                # Global constants (App assets, strings, colors)
+│   ├── models/                   # Global shared models
+│   ├── network/                  # API Service client config
+│   ├── routing/                  # App routes and navigation setup
+│   ├── theme/                    # Light/Dark themes and style sheets
+│   └── widgets/                  # Reusable global widgets
 │
-└── features/                # Application features (Modular approach)
-    ├── auth/                # Authentication Feature
-    │   ├── data/            # Models, data sources, and repositories for Auth
-    │   ├── cubit/           # Auth Cubits and States
-    │   └── presentation/    # Login, Sign Up screens & widgets
-    │
-    ├── products/            # Product Catalog & Search Feature
-    │   ├── data/            # Product models & API requests
-    │   ├── cubit/           # Product fetching Cubits and States
-    │   └── presentation/    # Discover & Product Details screens
-    │
-    └── cart/                # Shopping Cart Feature
-        ├── data/            # Cart models & logic
-        ├── cubit/           # Cart management Cubits
-        └── presentation/    # Cart & Checkout screens
-
+├── features/                     # Highly modular feature components
+│   ├── address_book/             # Saved shipping addresses feature
+│   │   ├── data/                 # Data layer (Clean Architecture)
+│   │   │   ├── data_source/      # Remote/Local data sources (e.g., Address_remote_data_source.dart)
+│   │   │   ├── models/           # Data models & JSON serialization (e.g., Address_model.dart)
+│   │   │   └── repositories/     # Repository implementations (e.g., Address_repository.dart)
+│   │   └── presentation/         # UI layer
+│   │
+│   ├── auth/                     # Authentication Module
+│   │   ├── models/               # Request & Response models (e.g., Login models)
+│   │   └── presentation/         
+│   │       ├── manager/          # State management (log_in_cubit.dart & log_in_state.dart)
+│   │       ├── screens/          # Screen layouts (log_in_screen.dart & sign_up_screen.dart)
+│   │       └── widgets/          # UI specific widgets (auth_header.dart & auth_footer.dart)
+│   │
+│   ├── cart/                     # Shopping cart module
+│   │
+│   ├── layout/                   # Main app container layout (Bottom Navigation Bar)
+│   │   └── presentation/         
+│   │       └── screens/          
+│   │
+│   ├── products/                 # Clothes & Products Catalog
+│   │
+│   └── profile/                  # Account & user options
+│       └── presentation/         
+│
+└── main.dart                     # Application entry point
